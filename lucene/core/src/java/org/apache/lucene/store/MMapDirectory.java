@@ -110,6 +110,7 @@ public class MMapDirectory extends FSDirectory {
    */
   public MMapDirectory(Path path, LockFactory lockFactory) throws IOException {
     this(path, lockFactory, DEFAULT_MAX_CHUNK_SIZE);
+    System.out.printf("=== Create a new MMapDirectory instance with MaxChunk=%f(GB) \n", (float)DEFAULT_MAX_CHUNK_SIZE/(1024*1024*1024));
   }
 
   /** Create a new MMapDirectory for the named location and {@link FSLockFactory#getDefault()}.
@@ -232,6 +233,7 @@ public class MMapDirectory extends FSDirectory {
   /** Creates an IndexInput for the file with the given name. */
   @Override
   public IndexInput openInput(String name, IOContext context) throws IOException {
+    System.out.printf("==== open IndexInput for %s\n", name);
     ensureOpen();
     ensureCanRead(name);
     Path path = directory.resolve(name);

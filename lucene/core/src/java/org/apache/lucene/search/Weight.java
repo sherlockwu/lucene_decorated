@@ -170,6 +170,7 @@ public abstract class Weight implements SegmentCacheable {
       this.scorer = scorer;
       this.iterator = scorer.iterator();
       this.twoPhase = scorer.twoPhaseIterator();
+      System.out.printf("==== Weight.DefaultBulkScorer\n                   scorer: %s, iterator: %s, twoPhase: %s\n", scorer, scorer.iterator(), scorer.twoPhaseIterator());
     }
 
     @Override
@@ -179,6 +180,7 @@ public abstract class Weight implements SegmentCacheable {
 
     @Override
     public int score(LeafCollector collector, Bits acceptDocs, int min, int max) throws IOException {
+      System.out.println("=== Weight.DefaultBulkScorer.score");
       collector.setScorer(scorer);
       if (scorer.docID() == -1 && min == 0 && max == DocIdSetIterator.NO_MORE_DOCS) {
         scoreAll(collector, iterator, twoPhase, acceptDocs);
@@ -227,13 +229,17 @@ public abstract class Weight implements SegmentCacheable {
      *  hotspot.
      *  See <a href="https://issues.apache.org/jira/browse/LUCENE-5487">LUCENE-5487</a> */
     static void scoreAll(LeafCollector collector, DocIdSetIterator iterator, TwoPhaseIterator twoPhase, Bits acceptDocs) throws IOException {
+      System.out.printf("=== DocIdSetIterator type of %s \n", iterator.getClass().getSimpleName());
+      System.out.printf("==== Collector type of %s \n", collector.getClass().getSimpleName());
       if (twoPhase == null) {
+        System.out.println("====       .scoreAll.SinglePhase");
         for (int doc = iterator.nextDoc(); doc != DocIdSetIterator.NO_MORE_DOCS; doc = iterator.nextDoc()) {
           if (acceptDocs == null || acceptDocs.get(doc)) {
             collector.collect(doc);
           }
         }
       } else {
+        System.out.println("====       .scoreAll.TwoPhase");
         // The scorer has an approximation, so run the approximation first, then check acceptDocs, then confirm
         final DocIdSetIterator approximation = twoPhase.approximation();
         for (int doc = approximation.nextDoc(); doc != DocIdSetIterator.NO_MORE_DOCS; doc = approximation.nextDoc()) {

@@ -56,6 +56,7 @@ class ConjunctionScorer extends Scorer {
 
   @Override
   public float score() throws IOException {
+    System.out.println("=== score() in ConjunctionScorer");
     double sum = 0.0d;
     for (Scorer scorer : scorers) {
       sum += scorer.score();

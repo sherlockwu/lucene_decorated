@@ -226,6 +226,7 @@ public final class SegmentReader extends CodecReader {
   @Override
   public int maxDoc() {
     // Don't call ensureOpen() here (it could affect performance)
+    //System.out.println("=== SegmentReader.maxDoc");
     return si.info.maxDoc();
   }
 

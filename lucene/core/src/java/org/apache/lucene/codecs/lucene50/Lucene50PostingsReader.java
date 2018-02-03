@@ -370,10 +370,14 @@ public final class Lucene50PostingsReader extends PostingsReaderBase {
       if (left >= BLOCK_SIZE) {
         forUtil.readBlock(docIn, encoded, docDeltaBuffer);
 
+        System.out.println("=== to check have frequencies");
         if (indexHasFreq) {
+          System.out.println("==== have frequencies");
           if (needsFreq) {
+            System.out.println("==== do need frequencies");
             forUtil.readBlock(docIn, encoded, freqBuffer);
           } else {
+            System.out.println("==== do not need frequencies");
             forUtil.skipBlock(docIn); // skip over freqs
           }
         }
@@ -402,6 +406,7 @@ public final class Lucene50PostingsReader extends PostingsReaderBase {
       doc = accum;
       freq = freqBuffer[docBufferUpto];
       docBufferUpto++;
+      //System.out.printf("=== nextDoc: %d \n", doc);
       return doc;
     }
 
@@ -411,6 +416,7 @@ public final class Lucene50PostingsReader extends PostingsReaderBase {
 
       // current skip docID < docIDs generated from current buffer <= next skip docID
       // we don't need to skip if target is buffered already
+      System.out.println("!!advance");
       if (docFreq > BLOCK_SIZE && target > nextSkipDoc) {
 
         if (skipper == null) {

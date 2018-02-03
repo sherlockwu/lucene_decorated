@@ -124,6 +124,7 @@ final class TermScorer extends Scorer {
   @Override
   public float score() throws IOException {
     assert docID() != DocIdSetIterator.NO_MORE_DOCS;
+    System.out.printf("=== score in TermScoreer with %s\n", docScorer);
     return docScorer.score(postingsEnum.docID(), postingsEnum.freq());
   }
 

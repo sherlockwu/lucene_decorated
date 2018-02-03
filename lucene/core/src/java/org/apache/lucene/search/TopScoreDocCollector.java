@@ -82,6 +82,7 @@ public abstract class TopScoreDocCollector extends TopDocsCollector<ScoreDoc> {
         @Override
         public void collect(int doc) throws IOException {
           float score = scorer.score();
+          //System.out.printf("==== to collect, get score %f\n", score);
 
           // This collector relies on the fact that scorers produce positive values:
           assert score >= 0; // NOTE: false for NaN

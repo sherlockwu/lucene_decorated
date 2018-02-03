@@ -1,0 +1,1 @@
+export CLASSPATH=$CLASSPATH:./build/core/lucene-core-8.0.0-SNAPSHOT.jar:./build/queryparser/lucene-queryparser-8.0.0-SNAPSHOT.jar:./build/analysis/common/lucene-analyzers-common-8.0.0-SNAPSHOT.jar:./build/demo/lucene-demo-8.0.0-SNAPSHOT.jar

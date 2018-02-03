@@ -150,6 +150,7 @@ public class IndexSearcher {
   /** Creates a searcher searching the provided index. */
   public IndexSearcher(IndexReader r) {
     this(r, null);
+    System.out.println("Get a new indexsearcher"); 
   }
 
   /** Runs searches for each segment separately, using the
@@ -402,6 +403,7 @@ public class IndexSearcher {
    */
   public TopDocs search(Query query, int n)
     throws IOException {
+    System.out.println("=== indexsearcher.search()");
     return searchAfter(null, query, n);
   }
 
@@ -612,6 +614,7 @@ public class IndexSearcher {
       final LeafCollector leafCollector;
       try {
         leafCollector = collector.getLeafCollector(ctx);
+        System.out.printf("=== search get leafCollector, type of %s\n", leafCollector);
       } catch (CollectionTerminatedException e) {
         // there is no doc of interest in this reader context
         // continue with the following leaf
@@ -620,7 +623,8 @@ public class IndexSearcher {
       BulkScorer scorer = weight.bulkScorer(ctx);
       if (scorer != null) {
         try {
-          scorer.score(leafCollector, ctx.reader().getLiveDocs());
+          System.out.println("=== to score");
+          scorer.score(leafCollector, ctx.reader().getLiveDocs()); 
         } catch (CollectionTerminatedException e) {
           // collection was terminated prematurely
           // continue with the following leaf
@@ -698,6 +702,7 @@ public class IndexSearcher {
     final QueryCache queryCache = this.queryCache;
     Weight weight = query.createWeight(this, scoreMode, boost);
     if (scoreMode.needsScores() == false && queryCache != null) {
+      System.out.println("===!!!! do cache");
       weight = queryCache.doCache(weight, queryCachingPolicy);
     }
     return weight;
