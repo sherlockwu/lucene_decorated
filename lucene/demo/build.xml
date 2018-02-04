@@ -36,6 +36,8 @@
    <pathelement path="${queries.jar}"/>
    <pathelement path="${facet.jar}"/>
    <pathelement path="${expressions.jar}"/>
+   <pathelement path="./commons-io-2.6/commons-io-2.6.jar"/>
+   <pathelement path="${highlighter.jar}"/>
    <fileset dir="../expressions/lib"/>
    <fileset dir="lib"/>
   </path>

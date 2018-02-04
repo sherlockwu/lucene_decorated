@@ -33,9 +33,12 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.search.uhighlight.UnifiedHighlighter;
 
 /** Simple command-line based search demo. */
 public class SearchFiles {
@@ -115,6 +118,8 @@ public class SearchFiles {
       }
       
       Query query = parser.parse(line);
+      //System.out.printf("Searching for: %s \n", query);
+      //PhraseQuery query = new PhraseQuery(10, "contents", "protected", "int");
       System.out.println("Searching for: " + query.toString(field));
             
       if (repeat > 0) {                           // repeat & time as benchmark
@@ -150,8 +155,14 @@ public class SearchFiles {
  
     // Collect enough docs to show 5 pages
     TopDocs results = searcher.search(query, 5 * hitsPerPage);
+    //TopDocs results = searcher.search(query, 1 * hitsPerPage);
     ScoreDoc[] hits = results.scoreDocs;
-    
+   
+    // highlighting:
+    EnglishAnalyzer indexAnalyzer = new EnglishAnalyzer();
+    UnifiedHighlighter highlighter = new UnifiedHighlighter(searcher, indexAnalyzer);
+    String snippets[] = highlighter.highlight("contents", query, results);
+
     int numTotalHits = Math.toIntExact(results.totalHits);
     System.out.println(numTotalHits + " total matching documents");
 
@@ -182,6 +193,7 @@ public class SearchFiles {
         String path = doc.get("path");
         if (path != null) {
           System.out.println((i+1) + ". " + path);
+          System.out.println("     " + snippets[i]);
           String title = doc.get("title");
           if (title != null) {
             System.out.println("   Title: " + doc.get("title"));

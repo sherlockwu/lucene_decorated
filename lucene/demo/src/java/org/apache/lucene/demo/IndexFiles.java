@@ -43,6 +43,7 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.commons.io.IOUtils;
 
 /** Index all text files under a directory.
  * <p>
@@ -190,7 +191,12 @@ public class IndexFiles {
       // so that the text of the file is tokenized and indexed, but not stored.
       // Note that FileReader expects the file to be in UTF-8 encoding.
       // If that's not the case searching for special characters will fail.
-      doc.add(new TextField("contents", new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))));
+      // read in the file:
+      //BufferedReader myInputStream = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
+      String myString = IOUtils.toString(stream, "UTF-8");
+      doc.add(new TextField("contents", myString, Field.Store.YES));
+
+      // doc.add(new TextField("contents", new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))));
       
       if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
         // New index, so we just add the document (no old document can be there):
