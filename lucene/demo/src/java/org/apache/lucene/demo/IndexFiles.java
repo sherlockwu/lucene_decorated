@@ -37,7 +37,9 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
@@ -194,7 +196,11 @@ public class IndexFiles {
       // read in the file:
       //BufferedReader myInputStream = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
       String myString = IOUtils.toString(stream, "UTF-8");
-      doc.add(new TextField("contents", myString, Field.Store.YES));
+      FieldType offsetsType = new FieldType(TextField.TYPE_STORED);
+      offsetsType.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS);
+      
+      //doc.add(new TextField("contents", myString, Field.Store.YES));
+      doc.add(new Field("contents", myString, offsetsType));
 
       // doc.add(new TextField("contents", new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))));
       

@@ -80,6 +80,7 @@ public abstract class CodecReader extends LeafReader implements Accountable {
   @Override
   public final void document(int docID, StoredFieldVisitor visitor) throws IOException {
     checkBounds(docID);
+    System.out.printf("in codecReader %s \n", getFieldsReader());
     getFieldsReader().visitDocument(docID, visitor);
   }
   

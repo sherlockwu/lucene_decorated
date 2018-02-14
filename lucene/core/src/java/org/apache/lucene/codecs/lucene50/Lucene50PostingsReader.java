@@ -912,6 +912,7 @@ public final class Lucene50PostingsReader extends PostingsReaderBase {
       encoded = new byte[MAX_ENCODED_SIZE];
       indexHasOffsets = fieldInfo.getIndexOptions().compareTo(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS) >= 0;
       if (indexHasOffsets) {
+        System.out.println("==== Do store offsets! ");
         offsetStartDeltaBuffer = new int[MAX_DATA_SIZE];
         offsetLengthBuffer = new int[MAX_DATA_SIZE];
       } else {

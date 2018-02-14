@@ -574,7 +574,7 @@ public final class CompressingStoredFieldsReader extends StoredFieldsReader {
   @Override
   public void visitDocument(int docID, StoredFieldVisitor visitor)
       throws IOException {
-
+    System.out.printf("field indexinput types of %s\n", fieldsStream);
     final SerializedDocument doc = document(docID);
 
     for (int fieldIDX = 0; fieldIDX < doc.numStoredFields; fieldIDX++) {

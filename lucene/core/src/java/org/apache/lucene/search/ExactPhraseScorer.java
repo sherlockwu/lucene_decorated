@@ -59,6 +59,7 @@ final class ExactPhraseScorer extends Scorer {
     for(PhraseQuery.PostingsAndFreq posting : postings) {
       iterators.add(posting.postings);
       postingsAndPositions.add(new PostingsAndPosition(posting.postings, posting.position));
+      System.out.printf("====  the postingEnum is type of %s\n", posting.postings);
     }
     conjunction = ConjunctionDISI.intersectIterators(iterators);
     assert TwoPhaseIterator.unwrap(conjunction) == null;

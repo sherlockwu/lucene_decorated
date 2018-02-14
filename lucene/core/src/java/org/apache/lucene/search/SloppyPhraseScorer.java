@@ -552,6 +552,7 @@ final class SloppyPhraseScorer extends Scorer {
   
   @Override
   public float score() throws IOException {
+    System.out.printf("scored by: %s", docScorer);
     return docScorer.score(docID(), sloppyFreq);
   }
 
@@ -568,6 +569,7 @@ final class SloppyPhraseScorer extends Scorer {
     return new TwoPhaseIterator(conjunction) {
       @Override
       public boolean matches() throws IOException {
+        System.out.println("===== judge whether mathces here");
         sloppyFreq = phraseFreq(); // check for phrase
         return sloppyFreq != 0F;
       }

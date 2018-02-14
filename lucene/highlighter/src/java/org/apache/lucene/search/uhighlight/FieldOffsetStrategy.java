@@ -97,9 +97,11 @@ public abstract class FieldOffsetStrategy {
 
   protected void createOffsetsEnumsForTerms(BytesRef[] sourceTerms, Terms termsIndex, int doc, List<OffsetsEnum> results) throws IOException {
     TermsEnum termsEnum = termsIndex.iterator();//does not return null
+    System.out.printf("==== Get TermsEnum type of %s  %s\n",termsEnum, termsIndex);
     for (BytesRef term : sourceTerms) {
       if (termsEnum.seekExact(term)) {
         PostingsEnum postingsEnum = termsEnum.postings(null, PostingsEnum.OFFSETS);
+        System.out.printf("==== Get PostingsEnum type of %s \n", postingsEnum);
         if (postingsEnum == null) {
           // no offsets or positions available
           throw new IllegalArgumentException("field '" + field + "' was indexed without offsets, cannot highlight");

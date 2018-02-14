@@ -47,6 +47,7 @@ public abstract class IndexInput extends DataInput implements Cloneable,Closeabl
    *  describing this resource; it's returned from
    *  {@link #toString}. */
   protected IndexInput(String resourceDescription) {
+    System.out.printf("== Open IndexInput for %s\n", resourceDescription);
     if (resourceDescription == null) {
       throw new IllegalArgumentException("resourceDescription must not be null");
     }

@@ -242,6 +242,7 @@ public abstract class Weight implements SegmentCacheable {
         System.out.println("====       .scoreAll.TwoPhase");
         // The scorer has an approximation, so run the approximation first, then check acceptDocs, then confirm
         final DocIdSetIterator approximation = twoPhase.approximation();
+        System.out.printf("====       iterator type of %s\n", twoPhase);
         for (int doc = approximation.nextDoc(); doc != DocIdSetIterator.NO_MORE_DOCS; doc = approximation.nextDoc()) {
           if ((acceptDocs == null || acceptDocs.get(doc)) && twoPhase.matches()) {
             collector.collect(doc);

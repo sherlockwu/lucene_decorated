@@ -65,6 +65,7 @@ public abstract class TwoPhaseIterator {
     TwoPhaseIteratorAsDocIdSetIterator(TwoPhaseIterator twoPhaseIterator) {
       this.twoPhaseIterator = twoPhaseIterator;
       this.approximation = twoPhaseIterator.approximation;
+      System.out.printf("==== Init TwoPhaseIteratorAsDocIdSetIterator with approximation iterator type of %s \n", this.approximation);
     }
 
     @Override

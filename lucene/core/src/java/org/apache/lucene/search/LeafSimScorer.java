@@ -59,6 +59,7 @@ public final class LeafSimScorer {
    *  This method must be called on non-decreasing sequences of doc ids.
    *  @see SimScorer#score(float, long) */
   public float score(int doc, float freq) throws IOException {
+    System.out.printf("!!!!!!!!!!!!!1LeafSimScorer.score with %s\n", scorer);
     return scorer.score(freq, getNormValue(doc));
   }
 

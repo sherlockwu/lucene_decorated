@@ -104,6 +104,7 @@ public class SimpleTextStoredFieldsReader extends StoredFieldsReader {
   
   @Override
   public void visitDocument(int n, StoredFieldVisitor visitor) throws IOException {
+    System.out.println("!!!!!get here");
     in.seek(offsets[n]);
     
     while (true) {

@@ -573,7 +573,7 @@ public class UnifiedHighlighter {
     for (int f = 0; f < fields.length; f++) {
       FieldHighlighter fieldHighlighter = getFieldHighlighter(fields[f], query, queryTerms, maxPassages[f]);
       fieldHighlighters[f] = fieldHighlighter;
-
+      System.out.printf("=== To highlight with offsets source: %s\n", fieldHighlighter.getOffsetSource());
       switch (fieldHighlighter.getOffsetSource()) {
         case TERM_VECTORS:
           numTermVectors++;
@@ -946,6 +946,7 @@ public class UnifiedHighlighter {
       }
       visitor.init();
       searcher.doc(docId, visitor);
+      System.out.printf("!!!! %s\n", visitor);
       CharSequence[] valuesByField = visitor.getValuesByField();
       docListOfFields.add(valuesByField);
       for (CharSequence val : valuesByField) {

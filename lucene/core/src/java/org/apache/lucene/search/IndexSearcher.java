@@ -150,7 +150,6 @@ public class IndexSearcher {
   /** Creates a searcher searching the provided index. */
   public IndexSearcher(IndexReader r) {
     this(r, null);
-    System.out.println("Get a new indexsearcher"); 
   }
 
   /** Runs searches for each segment separately, using the
